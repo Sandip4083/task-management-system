@@ -1,0 +1,19 @@
+{
+  "name": "taskflow-tms",
+  "version": "1.0.0",
+  "description": "TaskFlow — Full-Stack Task Management System",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm install && npm run build",
+    "postinstall": "cd backend && npm install && cd ../frontend && npm install && npm run build",
+    "render-build": "cd backend && npm install && cd ../frontend && npm install && npm run build"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["task-management", "express", "react", "sqlite"],
+  "license": "MIT"
+}

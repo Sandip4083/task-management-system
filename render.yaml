@@ -1,0 +1,20 @@
+# Render.com Blueprint — Auto-deploy configuration
+# Push this to GitHub and connect to Render for one-click deploy
+
+services:
+  - type: web
+    name: taskflow-tms
+    runtime: node
+    buildCommand: npm run render-build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 15m
+      - key: JWT_REFRESH_EXPIRES_IN
+        value: 7d
