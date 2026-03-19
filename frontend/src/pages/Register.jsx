@@ -47,23 +47,55 @@ function Register() {
     }
   };
 
+  // Password strength indicator
+  const getPasswordStrength = (pwd) => {
+    if (!pwd) return 0;
+    let score = 0;
+    if (pwd.length >= 6) score++;
+    if (pwd.length >= 10) score++;
+    if (/[A-Z]/.test(pwd)) score++;
+    if (/[0-9]/.test(pwd)) score++;
+    if (/[^A-Za-z0-9]/.test(pwd)) score++;
+    return score;
+  };
+
+  const strengthScore = getPasswordStrength(formData.password);
+  const strengthColors = ['', '#f07a93', '#f8d06a', '#f8d06a', '#5dda9a', '#5dda9a'];
+
   return (
     <div className="auth-page">
       <div className="auth-container">
+        {/* Visual Panel */}
         <div className="auth-visual">
           <div className="auth-visual-content">
             <div className="auth-visual-icon">
               <svg viewBox="0 0 80 80" fill="none">
-                <rect x="8" y="16" width="64" height="48" rx="8" stroke="currentColor" strokeWidth="2.5" fill="none" />
-                <path d="M20 32h24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M20 42h16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M20 52h20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                <circle cx="56" cy="44" r="12" stroke="currentColor" strokeWidth="2.5" fill="none" />
-                <path d="M52 44l3 3 5-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                <rect x="8" y="14" width="64" height="52" rx="10" stroke="currentColor" strokeWidth="2.5" fill="none" />
+                <path d="M20 30h26" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M20 40h18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M20 50h22" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                <circle cx="56" cy="44" r="13" stroke="currentColor" strokeWidth="2.5" fill="none" />
+                <path d="M51.5 44l3.5 3.5 6-7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
             <h2>TaskFlow</h2>
-            <p>Join thousands of productive people. Create your account and start managing tasks like a pro.</p>
+            <p>Join and start managing your tasks like a pro. Free forever, no credit card required.</p>
+
+            <div className="auth-feature-pills">
+              <div className="feature-pill">
+                <span className="feature-pill-dot blue"></span>
+                Free forever, unlimited tasks
+              </div>
+              <div className="feature-pill">
+                <span className="feature-pill-dot purple"></span>
+                Smart priority &amp; due date tracking
+              </div>
+              <div className="feature-pill">
+                <span className="feature-pill-dot green"></span>
+                Setup in under 30 seconds
+              </div>
+            </div>
+
             <div className="auth-visual-stats">
               <div className="stat-item">
                 <span className="stat-number">Free</span>
@@ -75,17 +107,30 @@ function Register() {
               </div>
               <div className="stat-item">
                 <span className="stat-number">Safe</span>
-                <span className="stat-label">& Secure</span>
+                <span className="stat-label">&amp; Secure</span>
               </div>
             </div>
           </div>
         </div>
 
+        {/* Form Section */}
         <div className="auth-form-section">
           <div className="auth-form-wrapper">
+            {/* Mobile Logo */}
+            <div className="auth-logo-mobile">
+              <svg viewBox="0 0 24 24" fill="none" width="28" height="28">
+                <rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor" strokeWidth="1.8" fill="none" />
+                <path d="M7 9h6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                <path d="M7 13h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                <circle cx="17" cy="13" r="3.5" stroke="currentColor" strokeWidth="1.8" fill="none" />
+                <path d="M15.8 13l1 1 1.8-2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>TaskFlow</span>
+            </div>
+
             <div className="auth-header">
               <h1>Create account</h1>
-              <p>Get started with your free TaskFlow account</p>
+              <p>Get started with your free TaskFlow account today.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="auth-form" id="register-form">
@@ -149,6 +194,19 @@ function Register() {
                     {showPassword ? <HiOutlineEyeOff /> : <HiOutlineEye />}
                   </button>
                 </div>
+                {formData.password && (
+                  <div className="password-strength">
+                    {[1, 2, 3, 4, 5].map((i) => (
+                      <div
+                        key={i}
+                        className="strength-bar"
+                        style={{
+                          background: i <= strengthScore ? strengthColors[strengthScore] : undefined,
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="form-group">
@@ -180,12 +238,13 @@ function Register() {
                     <span className="spinner-small"></span>
                     Creating account...
                   </span>
-                ) : 'Create Account'}
+                ) : 'Create Account →'}
               </button>
             </form>
 
             <p className="auth-switch">
-              Already have an account? <Link to="/login">Sign in</Link>
+              Already have an account?{' '}
+              <Link to="/login">Sign in</Link>
             </p>
           </div>
         </div>

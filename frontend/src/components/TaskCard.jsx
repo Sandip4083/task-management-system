@@ -1,9 +1,9 @@
 import { HiOutlineCheckCircle, HiOutlinePencil, HiOutlineTrash, HiOutlineClock, HiOutlineCalendar } from 'react-icons/hi';
 
 const priorityConfig = {
-  low: { label: 'Low', color: '#22c55e', bg: 'rgba(34,197,94,0.12)' },
-  medium: { label: 'Medium', color: '#f59e0b', bg: 'rgba(245,158,11,0.12)' },
-  high: { label: 'High', color: '#ef4444', bg: 'rgba(239,68,68,0.12)' },
+  low:    { label: 'Low',    color: '#5dda9a', bg: 'rgba(93,218,154,0.12)' },
+  medium: { label: 'Medium', color: '#f8d06a', bg: 'rgba(248,208,106,0.12)' },
+  high:   { label: 'High',   color: '#f07a93', bg: 'rgba(240,122,147,0.12)' },
 };
 
 function TaskCard({ task, onToggle, onEdit, onDelete }) {
@@ -18,7 +18,11 @@ function TaskCard({ task, onToggle, onEdit, onDelete }) {
   };
 
   return (
-    <div className={`task-card ${isCompleted ? 'task-completed' : ''} ${isOverdue ? 'task-overdue' : ''}`} id={`task-card-${task.id}`}>
+    <div
+      className={`task-card ${isCompleted ? 'task-completed' : ''} ${isOverdue ? 'task-overdue' : ''}`}
+      id={`task-card-${task.id}`}
+      data-priority={task.priority}
+    >
       <div className="task-card-left">
         <button
           className={`task-check ${isCompleted ? 'checked' : ''}`}
@@ -37,13 +41,16 @@ function TaskCard({ task, onToggle, onEdit, onDelete }) {
             <p className="task-description">{task.description}</p>
           )}
           <div className="task-meta">
-            <span className="priority-badge" style={{ color: priority.color, background: priority.bg }}>
+            <span
+              className="priority-badge"
+              style={{ color: priority.color, background: priority.bg }}
+            >
               {priority.label}
             </span>
             {task.dueDate && (
               <span className={`due-date ${isOverdue ? 'overdue' : ''}`}>
                 <HiOutlineCalendar />
-                {formatDate(task.dueDate)}
+                {isOverdue ? '⚠ ' : ''}{formatDate(task.dueDate)}
               </span>
             )}
             <span className="task-time">

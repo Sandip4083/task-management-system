@@ -11,7 +11,7 @@ import {
   HiOutlineCollection,
   HiOutlineCheckCircle,
   HiOutlineClock,
-  HiOutlineExclamation,
+  HiOutlineLightningBolt,
   HiOutlineChevronLeft,
   HiOutlineChevronRight,
   HiOutlineFilter,
@@ -144,13 +144,15 @@ function Dashboard() {
         <div className="header-content">
           <div className="header-left">
             <div className="logo">
-              <svg viewBox="0 0 32 32" fill="none" width="32" height="32">
-                <rect x="3" y="6" width="26" height="20" rx="4" stroke="currentColor" strokeWidth="2" fill="none" />
-                <path d="M9 14h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                <path d="M9 19h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                <circle cx="23" cy="18" r="5" stroke="currentColor" strokeWidth="2" fill="none" />
-                <path d="M21 18l1.5 1.5 2.5-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <div className="logo-icon">
+                <svg viewBox="0 0 24 24" fill="none" width="20" height="20">
+                  <rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor" strokeWidth="1.8" fill="none" />
+                  <path d="M7 9h6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  <path d="M7 13h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  <circle cx="17" cy="13" r="3.5" stroke="currentColor" strokeWidth="1.8" fill="none" />
+                  <path d="M15.8 13l1 1 1.8-2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
               <span>TaskFlow</span>
             </div>
           </div>
@@ -173,9 +175,15 @@ function Dashboard() {
       <main className="dashboard-main">
         {/* Welcome Banner */}
         <div className="welcome-banner">
-          <div className="welcome-text">
-            <h1>Welcome{user?.username ? `, ${user.username}` : ''} 👋</h1>
-            <p>Here&apos;s your productivity overview for today</p>
+          <div className="welcome-content">
+            <div className="welcome-text">
+              <h1>Welcome back{user?.username ? `, ${user.username}` : ''} 👋</h1>
+              <p>Here&apos;s your productivity overview for today. Stay focused and crush your goals!</p>
+            </div>
+            <div className="welcome-badge">
+              <span className="welcome-badge-dot" />
+              Active Session
+            </div>
           </div>
         </div>
 
@@ -211,13 +219,13 @@ function Dashboard() {
             </div>
             <div className="stat-card" id="stat-rate">
               <div className="stat-card-icon rate">
-                <HiOutlineExclamation />
+                <HiOutlineLightningBolt />
               </div>
               <div className="stat-card-content">
                 <span className="stat-card-value">{stats.completionRate}%</span>
                 <span className="stat-card-label">Completion Rate</span>
               </div>
-              <div className="progress-bar">
+              <div className="progress-bar" style={{ position: 'absolute', bottom: 0, left: 0, right: 0, borderRadius: '0 0 20px 20px', margin: 0 }}>
                 <div className="progress-fill" style={{ width: `${stats.completionRate}%` }} />
               </div>
             </div>
@@ -231,7 +239,7 @@ function Dashboard() {
               <HiOutlineSearch className="search-icon" />
               <input
                 type="text"
-                placeholder="Search tasks..."
+                placeholder="Search tasks by title or description..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="search-input"
@@ -258,7 +266,7 @@ function Dashboard() {
           </button>
         </div>
 
-        {/* Filters */}
+        {/* Filters Panel */}
         {showFilters && (
           <div className="filters-panel" id="filters-panel">
             <div className="filter-group">
@@ -294,8 +302,18 @@ function Dashboard() {
             </div>
             {hasActiveFilters && (
               <button className="btn btn-ghost btn-sm clear-filters" onClick={clearFilters}>
-                Clear all filters
+                ✕ Clear filters
               </button>
+            )}
+          </div>
+        )}
+
+        {/* Section Header */}
+        {!loading && tasks.length > 0 && (
+          <div className="section-header">
+            <span className="section-title">Your Tasks</span>
+            {pagination && (
+              <span className="section-count">{pagination.totalItems} task{pagination.totalItems !== 1 ? 's' : ''}</span>
             )}
           </div>
         )}
@@ -319,13 +337,13 @@ function Dashboard() {
               <div className="empty-icon">
                 <svg viewBox="0 0 120 120" fill="none" width="120" height="120">
                   <circle cx="60" cy="60" r="50" stroke="currentColor" strokeWidth="2" opacity="0.2" />
-                  <path d="M40 55h40M40 65h25M40 75h30" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" opacity="0.3" />
-                  <circle cx="85" cy="75" r="18" stroke="currentColor" strokeWidth="2.5" opacity="0.5" />
-                  <path d="M80 75l3.5 3.5 6-7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
+                  <path d="M40 52h40M40 62h26M40 72h32" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" opacity="0.3" />
+                  <circle cx="82" cy="72" r="18" stroke="currentColor" strokeWidth="2.5" opacity="0.5" />
+                  <path d="M77 72l3.5 3.5 6.5-7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
                 </svg>
               </div>
               <h3>{hasActiveFilters ? 'No matching tasks' : 'No tasks yet'}</h3>
-              <p>{hasActiveFilters ? 'Try changing your filters or search query' : 'Create your first task to get started!'}</p>
+              <p>{hasActiveFilters ? 'Try changing or clearing your filters to see tasks' : 'Create your first task to get started on your productivity journey!'}</p>
               {!hasActiveFilters && (
                 <button className="btn btn-primary" onClick={() => { setEditingTask(null); setShowModal(true); }}>
                   <HiOutlinePlus /> Create First Task

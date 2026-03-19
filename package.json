@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "TaskFlow — Full-Stack Task Management System",
   "scripts": {
+    "dev": "concurrently --names \"BACKEND,FRONTEND\" --prefix-colors \"cyan,magenta\" \"npm run dev:backend\" \"npm run dev:frontend\"",
     "start": "node backend/server.js",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
@@ -10,6 +11,9 @@
     "build": "cd frontend && npm install && npm run build",
     "postinstall": "cd backend && npm install && cd ../frontend && npm install && npm run build",
     "render-build": "cd backend && npm install && cd ../frontend && npm install && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
   },
   "engines": {
     "node": ">=18.0.0"

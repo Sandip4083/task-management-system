@@ -1,7 +1,7 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 const { sequelize } = require('./models');
 const authRoutes = require('./routes/auth');
 const taskRoutes = require('./routes/tasks');
@@ -75,7 +75,7 @@ app.use((err, req, res, _next) => {
 const startServer = async () => {
   try {
     // Sync database
-    await sequelize.sync({ alter: !isProduction });
+    await sequelize.sync();
     console.log('✅ Database synced successfully');
 
     app.listen(PORT, () => {

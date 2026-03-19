@@ -34,20 +34,37 @@ function Login() {
   return (
     <div className="auth-page">
       <div className="auth-container">
+        {/* Visual Panel */}
         <div className="auth-visual">
           <div className="auth-visual-content">
             <div className="auth-visual-icon">
               <svg viewBox="0 0 80 80" fill="none">
-                <rect x="8" y="16" width="64" height="48" rx="8" stroke="currentColor" strokeWidth="2.5" fill="none" />
-                <path d="M20 32h24" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M20 42h16" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M20 52h20" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-                <circle cx="56" cy="44" r="12" stroke="currentColor" strokeWidth="2.5" fill="none" />
-                <path d="M52 44l3 3 5-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                <rect x="8" y="14" width="64" height="52" rx="10" stroke="currentColor" strokeWidth="2.5" fill="none" />
+                <path d="M20 30h26" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M20 40h18" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M20 50h22" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                <circle cx="56" cy="44" r="13" stroke="currentColor" strokeWidth="2.5" fill="none" />
+                <path d="M51.5 44l3.5 3.5 6-7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
             <h2>TaskFlow</h2>
             <p>Organize your life, one task at a time. Stay productive with our intuitive task management system.</p>
+
+            <div className="auth-feature-pills">
+              <div className="feature-pill">
+                <span className="feature-pill-dot blue"></span>
+                JWT-secured authentication
+              </div>
+              <div className="feature-pill">
+                <span className="feature-pill-dot purple"></span>
+                Priority-based task management
+              </div>
+              <div className="feature-pill">
+                <span className="feature-pill-dot green"></span>
+                Real-time stats &amp; tracking
+              </div>
+            </div>
+
             <div className="auth-visual-stats">
               <div className="stat-item">
                 <span className="stat-number">∞</span>
@@ -65,11 +82,24 @@ function Login() {
           </div>
         </div>
 
+        {/* Form Section */}
         <div className="auth-form-section">
           <div className="auth-form-wrapper">
+            {/* Mobile Logo */}
+            <div className="auth-logo-mobile">
+              <svg viewBox="0 0 24 24" fill="none" width="28" height="28">
+                <rect x="3" y="4" width="18" height="16" rx="3" stroke="currentColor" strokeWidth="1.8" fill="none" />
+                <path d="M7 9h6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                <path d="M7 13h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                <circle cx="17" cy="13" r="3.5" stroke="currentColor" strokeWidth="1.8" fill="none" />
+                <path d="M15.8 13l1 1 1.8-2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span>TaskFlow</span>
+            </div>
+
             <div className="auth-header">
               <h1>Welcome back</h1>
-              <p>Sign in to continue managing your tasks</p>
+              <p>Sign in to continue managing your tasks and track your progress.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="auth-form" id="login-form">
@@ -126,12 +156,13 @@ function Login() {
                     <span className="spinner-small"></span>
                     Signing in...
                   </span>
-                ) : 'Sign In'}
+                ) : 'Sign In →'}
               </button>
             </form>
 
             <p className="auth-switch">
-              Don&apos;t have an account? <Link to="/register">Create one</Link>
+              Don&apos;t have an account?{' '}
+              <Link to="/register">Create one for free</Link>
             </p>
           </div>
         </div>
