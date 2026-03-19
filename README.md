@@ -373,7 +373,7 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 <div align="center">
 
-Made with ❤️ using React, Express, and SQLite
+Made with ❤️ by Sandip4083 using React, Express, and SQLite
 
 **[⬆ Back to top](#taskflow--task-management-system)**
 
